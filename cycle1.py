@@ -26,7 +26,18 @@ def has_cycle1(graph: nx.DiGraph)->bool:
     True
     """
     # Your code here
-    pass
+    if not graph.nodes or not graph.edges:
+        return False
+    transformed = nx.DiGraph()
+
+    for edge in graph.edges(data=True):
+        u, v, attrs = edge
+        w = attrs["weight"]
+        
+        transformed.add_edge(u, v, weight=np.log(w))
+
+    return nx.negative_edge_cycle(transformed)
+
 
 
 if __name__ == '__main__':
